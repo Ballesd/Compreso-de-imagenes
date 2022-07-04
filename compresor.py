@@ -1,3 +1,4 @@
+from pickletools import optimize
 import sys 
 import os
 from PyQt5.QtWidgets import QApplication,QAction,QFileDialog,QMainWindow,QPushButton
@@ -14,17 +15,25 @@ class CompersoFiles(QMainWindow):
         self.ui.Subir.clicked.connect(self.cargar)
         self.ui.Comprimir.clicked.connect(self.compresor)
 
+        self.archivosURL =  ''   
+        self.extenciones = [".jpg",".jpeg",".png"]
         self.show()
 
 
     def cargar(self):
-        archivoURL = QFileDialog.getOpenFileName(self,'Abrir Archivo','C:\\',"" )
-        print("la direcccion es: ",archivoURL[0])
+        self.archivosURL = QFileDialog.getExistingDirectory(self, "Abrir Carpeta")
+
     
     def compresor(self):
-        pass
-
-
+        
+        for filename in os.listdir(self.archivosURL):
+            direcc = self.archivosURL + "/" + filename
+            nombre, extencion = os.path.splitext(direcc)
+            if( extencion in self.extenciones):
+                image = Image.open(direcc)
+                image.save(self.archivosURL + "compressed_" + filename, optimize = True, quality = 60) 
+        #D:\Users\Balles\Documents\Work,Computational\python\compresor\Compreso-de-imagenes\Imagenes
+        
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = CompersoFiles()
