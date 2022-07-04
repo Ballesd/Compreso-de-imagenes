@@ -3,7 +3,7 @@ import sys
 import os
 from PyQt5.QtWidgets import QApplication,QAction,QFileDialog,QMainWindow,QPushButton
 from InterfazCompresor import Ui_Compresor
-from PIL import Image,PdfParser
+from PIL import Image
 
 
 class CompersoFiles(QMainWindow):
